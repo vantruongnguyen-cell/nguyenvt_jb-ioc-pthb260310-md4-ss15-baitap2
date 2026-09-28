@@ -1,0 +1,18 @@
+server:
+  port: 8080 # Port chạy của API Gateway
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        # Định tuyến các request /api/courses/** xuống Course-Service
+        - id: course-service
+          uri: http://localhost:8081 # Port của Course-Service
+          predicates:
+            - Path=/api/courses/**
+
+# Secret Key dùng chung với Identity Service (phải có độ dài từ 256-bit / 32 ký tự trở lên)
+jwt:
+  secret: YourSecretKeyHereThatIsAtLeast256BitsLong123456789

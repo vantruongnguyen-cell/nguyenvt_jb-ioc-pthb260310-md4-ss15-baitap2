@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'gateway-service'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Import BOM để quản lý version cho Spring Cloud
+    implementation platform("org.springframework.cloud:spring-cloud-dependencies:2023.0.0")
+
+    // 1. Spring Cloud Gateway (Reactive)
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    // 2. JJWT Library
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // 3. Lombok (Ghi rõ version để Gradle không bị báo thiếu)
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // 4. DevTools & Testing
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
